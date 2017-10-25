@@ -1,7 +1,9 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
+var passport = require('passport');
 var FitbitStrategy = require( 'passport-fitbit-oauth2' ).FitbitOAuth2Strategy;
+
 
 // Sets up the Express App
 // =============================================================
