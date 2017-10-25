@@ -1,0 +1,26 @@
+{
+  "name": "dashboard-of-health",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JimGray9999/dashboard-of-health.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JimGray9999/dashboard-of-health/issues"
+  },
+  "homepage": "https://github.com/JimGray9999/dashboard-of-health#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "passport": "^0.4.0",
+    "passport-fitbit-oauth2": "^1.0.2",
+    "path": "^0.12.7"
+  }
+}
