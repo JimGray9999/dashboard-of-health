@@ -17,7 +17,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 passport.use(new FitbitStrategy({
   clientID:     FITBIT_CLIENT_ID,
   clientSecret: FITBIT_CLIENT_SECRET,
-  callbackURL: "http://yourdormain:3000/auth/fitbit/callback"
+  callbackURL: "https://ihealth-tester.herokuapp.com/auth/fitbit/callback"
 },
 function(accessToken, refreshToken, profile, done) {
   User.findOrCreate({ fitbitId: profile.id }, function (err, user) {
