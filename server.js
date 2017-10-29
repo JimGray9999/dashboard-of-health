@@ -67,11 +67,11 @@ app.get("/api", function(req, res) {
         if(err) {
           console.log(err);
         } else {
-          // console.log(doc);
+          console.log(doc);
         }
       });
     }
-
+    console.log(result.body.logs);
     return res.json(result.body);
 
   });
