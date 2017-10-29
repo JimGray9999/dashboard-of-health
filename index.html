@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="jumbotron">
+      <h1>BGL Express Test</h1>
+      <h3>Press the button to test</h3>
+      <div class="sugars">
+        <p></p>
+      </div>
+      <hr>
+      <button type="button" id="api-button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-plus"></span>Do stuff</button>
+    </div>
+  
+<script type="text/javascript">
+  $("#api-button").on("click", function() {    
+    $.getJSON("/api", function(data) {
+      console.log(data.logs);
+      for (i = 0 ; i < data.logs.length ; i++) {
+        if(data.logs[i].logtype_id === 1){
+          $(".sugars").append((data.logs[i].value * 18) + " mg/dL");
+          $(".sugars").append("<br>");
+          <table class="table table-striped">
+        
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

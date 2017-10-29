@@ -18,9 +18,11 @@
   "homepage": "https://github.com/JimGray9999/dashboard-of-health#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "passport": "^0.4.0",
     "passport-fitbit-oauth2": "^1.0.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "unirest": "^0.5.1"
   }
 }
