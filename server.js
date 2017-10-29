@@ -26,6 +26,8 @@ app.use(express.static("public"));
 
 // Database configuration with mongoose
 mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
+// when testing, use localhost: mongoose.connect("mongodb://localhost/dashboard-health");
+// production, use Heroku: mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -49,10 +51,29 @@ app.get("/api", function(req, res) {
   .header("X-Mashape-Key", "6jSePifxX0mshxd2XWBWPbHlepblp1Xtffhjsnsd7sZZyeYkRa")
   .header("Accept", "application/json")
   .end(function (result) {
-    console.log(result.body);
+    
+    var testResults = {};
+    
+    for (i = 0 ; i < result.body.logs.length ; i++) {
+      if(result.body.logs[i].logtype_id === 1) {
+        testResults.value = Math.round((result.body.logs[i].value * 18)); // reading conversion - mmol * 18 = mg/dL
+        testResults.notes = result.body.logs[i].notes;
+        testResults.time = result.body.logs[i].time;
+        testResults.log_type = result.body.logs[i].logtype_id;
+      }
+      var newGlucose = new Glucose(testResults);
+  
+      newGlucose.save(function(err, doc) {
+        if(err) {
+          console.log(err);
+        } else {
+          // console.log(doc);
+        }
+      });
+    }
+
     return res.json(result.body);
-    // TODO: grab data from ManageBGL API user
-    //       add data to the MongoDB
+
   });
 })
 
