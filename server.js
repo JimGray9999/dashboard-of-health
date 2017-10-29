@@ -8,7 +8,8 @@ var unirest = require('unirest');
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = 8080;
+// use for Heroku app if launched
+var PORT = process.env.PORT || 8080;
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
