@@ -3,6 +3,11 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var GlucoseSchema = new Schema ({
+  log_id: {
+    type: Number,
+    required: true,
+    unique: true
+  },
   log_type: {
     type: Number,
     required: true

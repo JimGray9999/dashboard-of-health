@@ -25,7 +25,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
+mongoose.connect("mongodb://tester:tester@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 // when testing, use localhost: mongoose.connect("mongodb://localhost/dashboard-health");
 // production, use Heroku: mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 var db = mongoose.connection;
