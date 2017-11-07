@@ -14,29 +14,16 @@
 </head>
 <body>
     <div class="jumbotron">
-      <h1>BGL Express Test</h1>
-      <h3>Press the button to test</h3>
+      <h1>Welcome to The Sugar Data Server</h1>
+      <h3>This Heroku hosted site will serve as the route to the mlab database</h3>
+      <h3>The API call to the ManageBGL API will store all readings here</h3>
       <div class="sugars">
         <p></p>
       </div>
       <hr>
-      <button type="button" id="api-button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-plus"></span>Do stuff</button>
+      <button type="button" id="api-button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-plus"></span>Grab new readings</button>
     </div>
   
-<script type="text/javascript">
-  $("#api-button").on("click", function() {    
-    $.getJSON("/api", function(data) {
-      console.log(data.logs);
-      var table = "<table>";
-      
-      for (i = 0 ; i < data.logs.length ; i++) {
-        if(data.logs[i].logtype_id === 1){
-          $(".sugars").append((data.logs[i].value * 18) + " mg/dL");
-          $(".sugars").append("<br>");
-        }
-      }
-    });
-  });
-</script>
+<script src='./js/index.js'></script>
 </body>
 </html>

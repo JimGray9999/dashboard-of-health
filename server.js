@@ -29,7 +29,7 @@ mongoose.connect("mongodb://tester:tester@ds231245.mlab.com:31245/heroku_z3ttcl4
 // when testing, use localhost: mongoose.connect("mongodb://localhost/dashboard-health");
 // production, use Heroku: mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 var db = mongoose.connection;
-
+  
 // Show any mongoose errors
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
@@ -45,24 +45,37 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+app.get("/auth/success", function(req, res) {
+  res.sendFile(path.join(__dirname, "success.html"));
+});
+
 app.get("/api", function(req, res) {
   // These code snippets use an open-source library. http://unirest.io/nodejs
-  unirest.get("https://managebgl-managebgl.p.mashape.com/extract?end_date=2017-10-31+11%3A59%3A59&start_date=2017-10-25+14%3A03%3A00&token=14784-aeb0a9a6fd2d05f9213c5c49f3c74c6e")
+  unirest.get("https://managebgl-managebgl.p.mashape.com/extract?end_date=2017-11-05+11%3A59%3A59&start_date=2017-10-25+14%3A03%3A00&token=14784-aeb0a9a6fd2d05f9213c5c49f3c74c6e")
   .header("X-Mashape-Key", "6jSePifxX0mshxd2XWBWPbHlepblp1Xtffhjsnsd7sZZyeYkRa")
   .header("Accept", "application/json")
   .end(function (result) {
     
     var testResults = {};
     
+    // loop thru all results
+    // add only the glucose readings (logtype_id 1)
     for (i = 0 ; i < result.body.logs.length ; i++) {
       if(result.body.logs[i].logtype_id === 1) {
-        testResults.value = Math.round((result.body.logs[i].value * 18)); // reading conversion - mmol * 18 = mg/dL
-        testResults.notes = result.body.logs[i].notes;
-        testResults.time = result.body.logs[i].time;
-        testResults.log_type = result.body.logs[i].logtype_id;
+        testResults.log_id     = result.body.logs[i].log_id;
+        testResults.user_id    = result.body.logs[i].user_id;
+        testResults.logtype_id = result.body.logs[i].logtype_id;
+        testResults.other      = result.body.logs[i].other;
+        testResults.time       = result.body.logs[i].time;
+        testResults.created    = result.body.logs[i].created;
+        testResults.updated    = result.body.logs[i].updated;
+        testResults.value      = Math.round((result.body.logs[i].value * 18)); // reading conversion - mmol * 18 = mg/dL
+        testResults.notes      = result.body.logs[i].notes;
       }
+
       var newGlucose = new Glucose(testResults);
   
+      // save new data to mlab/mongoDB
       newGlucose.save(function(err, doc) {
         if(err) {
           console.log(err);
