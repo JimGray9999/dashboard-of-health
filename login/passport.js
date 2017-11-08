@@ -2,7 +2,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var FitbitStrategy = require('../../lib').FitbitOAuth2Strategy;
+var FitbitStrategy = require('../lib').FitbitOAuth2Strategy;
 var passport = require('passport');
 var keys = require('../test/keys');
 var app = express();
@@ -24,6 +24,9 @@ app.use(passport.initialize());
 
 // NOTE: If you test the code out, will need to provide your own clientID and clientSecret for FitBit
 // https://dev.fitbit.com/reference/web-api/basics/#overview
+
+// http://localhost:8080/auth/fitbit/callback for local test
+// https://ihealth-tester.herokuapp.com/ for Heroku
 var fitbitStrategy = new FitbitStrategy({
   clientID: keys.fitBits.CLIENT_ID,
   clientSecret: keys.fitbits.CLIENT_SECRET,
