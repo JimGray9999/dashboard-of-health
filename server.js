@@ -54,11 +54,6 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
 // FitBit Authentication
 app.get("/auth/success", function(req, res) {
   res.sendFile(path.join(__dirname, "success.html"));

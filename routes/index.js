@@ -5,7 +5,7 @@ var passport = require('passport');
 module.exports = function (app) {
     /* GET home page. */
   router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.sendFile(path.join(__dirname, "index.html"));
   });
 
   router.get('/protected', function (req, res, next) {
