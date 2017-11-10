@@ -1,8 +1,16 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var path = require("path");
-var mongoose = require("mongoose");
-var unirest = require('unirest');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+
+var LocalStrategy = require('passport-local').Strategy;
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
+var User = require('./models/user');
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise; 
@@ -24,6 +32,10 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // Make public a static dir
 app.use(express.static("public"));
 
+require("./login/passport.js")(app);
+require("./routes/index")(app);
+require("./routes/users")(app);
+
 // Database configuration with mongoose
 mongoose.connect("mongodb://tester:tester@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 // when testing, use localhost: mongoose.connect("mongodb://localhost/dashboard-health");
@@ -33,6 +45,8 @@ var db = mongoose.connection;
 // Show any mongoose errors
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+
 });
 
 // Once logged in to the db through mongoose, log a success message
@@ -45,50 +59,10 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// FitBit Authentication
 app.get("/auth/success", function(req, res) {
   res.sendFile(path.join(__dirname, "success.html"));
 });
-
-app.get("/api", function(req, res) {
-  // These code snippets use an open-source library. http://unirest.io/nodejs
-  unirest.get("https://managebgl-managebgl.p.mashape.com/extract?end_date=2017-11-05+11%3A59%3A59&start_date=2017-10-25+14%3A03%3A00&token=14784-aeb0a9a6fd2d05f9213c5c49f3c74c6e")
-  .header("X-Mashape-Key", "6jSePifxX0mshxd2XWBWPbHlepblp1Xtffhjsnsd7sZZyeYkRa")
-  .header("Accept", "application/json")
-  .end(function (result) {
-    
-    var testResults = {};
-    
-    // loop thru all results
-    // add only the glucose readings (logtype_id 1)
-    for (i = 0 ; i < result.body.logs.length ; i++) {
-      if(result.body.logs[i].logtype_id === 1) {
-        testResults.log_id     = result.body.logs[i].log_id;
-        testResults.user_id    = result.body.logs[i].user_id;
-        testResults.logtype_id = result.body.logs[i].logtype_id;
-        testResults.other      = result.body.logs[i].other;
-        testResults.time       = result.body.logs[i].time;
-        testResults.created    = result.body.logs[i].created;
-        testResults.updated    = result.body.logs[i].updated;
-        testResults.value      = Math.round((result.body.logs[i].value * 18)); // reading conversion - mmol * 18 = mg/dL
-        testResults.notes      = result.body.logs[i].notes;
-      }
-
-      var newGlucose = new Glucose(testResults);
-  
-      // save new data to mlab/mongoDB
-      newGlucose.save(function(err, doc) {
-        if(err) {
-          console.log(err);
-        } else {
-          console.log(doc);
-        }
-      });
-    }
-    console.log(result.body.logs);
-    return res.json(result.body);
-
-  });
-})
 
 // Starts the server to begin listening
 // =============================================================
