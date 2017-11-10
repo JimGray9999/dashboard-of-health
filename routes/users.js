@@ -12,7 +12,7 @@ module.exports = function(app) {
     res.send('respond with a resource');
   });
 
-  router.post('/register', function (req, res) {
+  router.post('/users/register', function (req, res) {
     User.register(new User({ email: req.body.email }), req.body.password, function (err, user) {
       if (err) {
         return res.status(400).send({ error: 'Email address in use.' })
@@ -21,7 +21,7 @@ module.exports = function(app) {
     });
   });
 
-  router.post('/login', function (req, res, next) {
+  router.post('/users/login', function (req, res, next) {
     passport.authenticate('local', function (err, user, info) {
       if (err) {
         return next(err);
