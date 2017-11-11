@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+var express  = require('express');
+var router   = express.Router();
 var passport = require('passport');
+var path     = require('path');
 
-module.exports = function (app) {
     /* GET home page. */
   router.get('/', function(req, res, next) {
     res.sendFile(path.join(__dirname, "index.html"));
@@ -20,10 +20,14 @@ module.exports = function (app) {
       }
       if (user) {
   // authentication was successful! send user the secret code.
+        res.sendFile(path.join(__dirname, "success.html"));      
         return res
           .status(200)
           .json({ secret: '123' });
+          
       }
     })(req, res, next);
   });
-}
+
+
+module.exports = router;
