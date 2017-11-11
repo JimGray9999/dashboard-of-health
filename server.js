@@ -23,7 +23,7 @@ mongoose.Promise = Promise;
 var app = express();
 
 // use for Heroku app if launched or local port 8080
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.MONGODB_URI || 8080;
 
 
 // Sets up the Express app to handle data parsing
