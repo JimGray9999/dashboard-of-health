@@ -21,9 +21,9 @@ mongoose.Promise = Promise;
 // Sets up the Express App
 // =============================================================
 var app = express();
-// use for Heroku app if launched
-var PORT = process.env.PORT || 8080;
 
+// use for Heroku app if launched or local port 8080
+var PORT = process.env.PORT || 8080;
 
 
 // Sets up the Express app to handle data parsing
@@ -50,6 +50,7 @@ app.use('/bgl', manageBGL);
 // Database configuration with mongoose
 mongoose.connect("mongodb://tester:tester@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 // when testing, use localhost: mongoose.connect("mongodb://localhost/dashboard-health");
+// mongodb://tester:tester@ds231245.mlab.com:31245/heroku_z3ttcl4x
 // production, use Heroku: mongoose.connect("mongodb://heroku_z3ttcl4x:rNRP9n_rQq2rOv9LX9CUWYaO4RjhulNC@ds231245.mlab.com:31245/heroku_z3ttcl4x");
 var db = mongoose.connection;
   
@@ -83,8 +84,6 @@ passport.use('jwt', new JwtStrategy(options, function(jwt_payload, done) {
    }
  })
 }))
-
-
 
 // FitBit Authentication
 app.get("/auth/success", function(req, res) {
