@@ -1,13 +1,13 @@
-var express = require('express');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
+var express        = require('express');
+var cookieParser   = require('cookie-parser');
+var bodyParser     = require('body-parser');
+var session        = require('express-session');
 var FitbitStrategy = require('../lib').FitbitOAuth2Strategy;
-var passport = require('passport');
-var keys = require('../test/keys');
-var app = express();
-var unirest = require('unirest');
-var moment = require('moment');
+var passport       = require('passport');
+var keys           = require('../test/keys');
+var app            = express();
+var unirest        = require('unirest');
+var moment         = require('moment');
 
 
 

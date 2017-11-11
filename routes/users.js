@@ -48,8 +48,9 @@ router.post('/login', function (req, res, next) {
 module.exports = router;
 
 // test curl line: login:
-// curl -H 'cache-control: no-cache' -H 'content-type: application/json' -X POST http://localhost:8080/users/login -d '{"username": "me@test.com", "password": "testing"}'
+// curl -H 'cache-control: no-cache' -H 'content-type: application/json' -X POST https://ihealth-tester.herokuapp.com/users/login  -d '{"username": "me@test.com", "password": "testing"}'
 // or https://ihealth-tester.herokuapp.com/users/login
+// http://localhost:8080/users/login
 
 // test curl line: authorizaton:
 // curl -H "Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhMDYxYjYyNjUwNWQ2MjhhNDA1YzZjZSIsImVtYWlsIjoibWVAdGVzdC5jb20iLCJpYXQiOjE1MTAzNTg2NTl9.FI5YL6OYZH-q9WjShCIJVobr__2EzF9iO9jJzI9Xhyo" -X GET http://localhost:8080/protected
